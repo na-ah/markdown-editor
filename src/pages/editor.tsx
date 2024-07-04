@@ -28,7 +28,6 @@ const HeaderArea = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  border-right: 1px solid silver;
   border-top: 1px solid silver;
   bottom: 0;
   font-size: 1rem;
@@ -40,6 +39,7 @@ const TextArea = styled.textarea`
 `;
 
 const Preview = styled.div`
+  z-index: -1;
   border-top: 1px solid silver;
   bottom: 0;
   overflow-y: scroll;
@@ -80,6 +80,13 @@ export const Editor: React.FC<Props> = (props) => {
         </Header>
       </HeaderArea>
       <Wrapper>
+        <TextArea
+          onChange={(event) => setText(event.target.value)}
+          value={text}
+        />
+        <Preview>
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        </Preview>
         {showModal && (
           <SaveModal
             onSave={(title: string): void => {
@@ -89,13 +96,6 @@ export const Editor: React.FC<Props> = (props) => {
             onCancel={() => setShowModal(false)}
           />
         )}
-        <TextArea
-          onChange={(event) => setText(event.target.value)}
-          value={text}
-        />
-        <Preview>
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </Preview>
       </Wrapper>
     </>
   );
